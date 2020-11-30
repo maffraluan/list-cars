@@ -12,4 +12,13 @@ async function getCars() {
   }
 }
 
-export { getCars };
+async function postCars(post) {
+  try {
+    await axios.post(url, post)
+    alert('Carro postado com sucesso!')
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export { getCars, postCars };
