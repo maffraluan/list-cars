@@ -1,5 +1,13 @@
-import { Card, CardContent, CardMedia, Typography } from '@material-ui/core';
+import {
+  Card,
+  CardContent,
+  CardMedia,
+  Typography,
+  Button,
+} from '@material-ui/core';
 import carImage from '../../../assets/car.png';
+import DeleteIcon from '@material-ui/icons/Delete';
+import { deleteCar } from '../../../api';
 import useStyles from './styles';
 
 const Car = ({ car }) => {
@@ -36,6 +44,15 @@ const Car = ({ car }) => {
         <Typography variant="h5" color="textSecondary" gutterBottom>
           Ano: {car.age}
         </Typography>
+
+        <Button>
+          <DeleteIcon
+            size="small"
+            color="primary"
+            onClick={() => deleteCar(car._id)}
+          />
+          Delete
+        </Button>
       </CardContent>
     </Card>
   );

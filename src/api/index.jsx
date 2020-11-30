@@ -12,13 +12,22 @@ async function getCars() {
   }
 }
 
-async function postCars(post) {
+async function postCars(newPost) {
   try {
-    await axios.post(url, post)
-    alert('Carro postado com sucesso!')
+    await axios.post(url, newPost);
+    return alert('Criado com sucesso!');
   } catch (error) {
-    console.log(error)
+    return alert(error, 'Erro ao criar!');
   }
 }
 
-export { getCars, postCars };
+async function deleteCar(id) {
+  try {
+    await axios.delete(`${url}/${id}`);
+    return alert('Apagado com sucesso!');
+  } catch (error) {
+    return alert(error, 'Erro ao apagar!');
+  }
+}
+
+export { getCars, postCars, deleteCar };
