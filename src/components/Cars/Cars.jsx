@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Grid, CircularProgress } from '@material-ui/core';
 import Car from './Car/Car';
-import { getCars } from '../../api';
-
+import { axios } from '../../api';
 import useStyles from './styles';
 
 const Cars = () => {
@@ -11,14 +10,19 @@ const Cars = () => {
 
   const classes = useStyles();
 
-  useEffect(() => {
-    async function fetchData() {
-      let response = await getCars();
+  const noCars = !cars || (cars && cars.length === 0);
 
-      let data = response.data;
-      setCars(data);
+  const getCars = async () => {
+    const response = await axios.get("/cars").catch((err) => {
+      console.log("Error:", err);
+    });
+    if (response && response.data) {
+      await setCars(response.data);
     }
-    fetchData();
+  };
+
+  useEffect(() => {
+    getCars();
   }, []);
 
   const handleScrollToPageBottom = () => {
@@ -37,7 +41,7 @@ const Cars = () => {
     }, 2000);
   }, [shown]);
 
-  return !cars.length ? (
+  return noCars ? (
     <CircularProgress />
   ) : (
     <Grid
@@ -48,7 +52,7 @@ const Cars = () => {
     >
       {cars.slice(0, shown).map((car) => (
         <Grid key={car._id} item xs={12} sm={6}>
-          <Car car={car} />
+          <Car car={car} getCars={getCars()} />
         </Grid>
       ))}
     </Grid>

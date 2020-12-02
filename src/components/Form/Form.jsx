@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { TextField, Button, Typography, Paper } from '@material-ui/core';
 import useStyles from './styles';
-import { postCars } from '../../api';
+import { axios }  from '../../api';
 
 const Form = () => {
   const [postData, setPostData] = useState({
@@ -13,11 +13,15 @@ const Form = () => {
 
   const classes = useStyles();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    console.log(postData);
+    const response = await axios.post("/cars", postData).catch((err) => {
+      console.log("Error: ", err);
+    });
 
-    postCars(postData);
-    handleClear();
+    if (response) await setPostData(response);
+    handleClear()
   };
 
   const handleClear = () => {

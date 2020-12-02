@@ -7,11 +7,19 @@ import {
 } from '@material-ui/core';
 import carImage from '../../../assets/car.png';
 import DeleteIcon from '@material-ui/icons/Delete';
-import { deleteCar } from '../../../api';
+import { axios } from '../../../api';
 import useStyles from './styles';
 
-const Car = ({ car }) => {
+const Car = ({ car, getCar }) => {
   const classes = useStyles();
+
+  const deleteCar = async (id) => {
+    const response = await axios.delete(`/cars/${id}`).catch((err) => {
+      console.log("Error deleting: ", err);
+    });
+
+    return response
+  };
 
   return (
     <Card className={classes.card}>
@@ -45,11 +53,10 @@ const Car = ({ car }) => {
           Ano: {car.age}
         </Typography>
 
-        <Button>
+        <Button onClick={() => deleteCar(car._id)}>
           <DeleteIcon
             size="small"
             color="primary"
-            onClick={() => deleteCar(car._id)}
           />
           Delete
         </Button>
