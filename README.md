@@ -25,5 +25,5 @@ Prettier,
 
 
 ## Erros probably may you see running:
-The API consumed is returning random items like TESTE AM and other stuff. 
+The API consumed is returning creations. 
 The API consumed has no pagination. Then you may reload the app to re-render the list of cars again. 
